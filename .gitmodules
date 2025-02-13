@@ -4,3 +4,6 @@
 [submodule "deps/wolfBoot"]
 	path = deps/wolfBoot
 	url = https://github.com/wolfSSL/wolfBoot.git
+[submodule "deps/mtb-xmclib-cat3"]
+	path = deps/mtb-xmclib-cat3
+	url = https://github.com/Infineon/mtb-xmclib-cat3.git
