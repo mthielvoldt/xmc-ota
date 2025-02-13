@@ -1,0 +1,6 @@
+[submodule "deps/firment"]
+	path = deps/firment
+	url = https://github.com/mthielvoldt/firment.git
+[submodule "deps/wolfBoot"]
+	path = deps/wolfBoot
+	url = https://github.com/wolfSSL/wolfBoot.git
