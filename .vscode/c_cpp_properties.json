@@ -9,7 +9,7 @@
         "includePath": [
           "firmware",
           "deps/firment/firmware/port/XMC4/4800_F144",
-          "deps/firment/firmware/port/XMC4/XMC4000_DFP/Device/XMClib/inc",
+          "deps/mtb-xmclib-cat3/XMCLib/inc",
           "deps/firment/firmware/port/XMC4/XMC4000_DFP/Device/XMC4700_series/Include",
           "deps/firment/firmware/port/XMC4/XMC4000_DFP/CMSIS/RTOS/RTX/INC",
           "deps/firment/firmware/port/XMC4/XMC4000_DFP/RTE_Driver",
