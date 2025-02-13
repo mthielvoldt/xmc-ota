@@ -1,0 +1,43 @@
+{
+  "version": 4,
+  "configurations": [
+      {
+        "name": "xmc4700",
+        "compilerPath": "/home/rileyt/compilers/arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc",
+        "compilerArgs": [],
+        "intelliSenseMode": "gcc-arm",
+        "includePath": [
+          "firmware",
+          "deps/firment/firmware/port/XMC4/4800_F144",
+          "deps/firment/firmware/port/XMC4/XMC4000_DFP/Device/XMClib/inc",
+          "deps/firment/firmware/port/XMC4/XMC4000_DFP/Device/XMC4700_series/Include",
+          "deps/firment/firmware/port/XMC4/XMC4000_DFP/CMSIS/RTOS/RTX/INC",
+          "deps/firment/firmware/port/XMC4/XMC4000_DFP/RTE_Driver",
+          "deps/firment/firmware/lib/CMSIS-6.1.0/Core/Include",
+          "deps/firment/firmware/lib/CMSIS-6.1.0/Driver/Include",
+          "deps/firment/protocol/nanopb",
+          "deps/wolfBoot/include"
+        ],
+        "forcedInclude": [],
+        "cStandard": "c11",
+        "cppStandard": "c++11",
+        "defines": [
+            "CONFIG_MQTT_PROTOCOL_5 1", 
+            "XMC4700_F144x2048"
+        ]
+      },
+      {
+        "name": "host-lin",
+        "compilerPath": "/usr/bin/gcc",
+        "compilerArgs": [],
+        "intelliSenseMode": "linux-gcc-x64",
+        "includePath": [
+        ],
+        "forcedInclude": [],
+        "cStandard": "c11",
+        "cppStandard": "c++11",
+        "defines": [
+        ]
+      }
+  ]
+}
