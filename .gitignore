@@ -1,4 +1,8 @@
+
+# Build artifacts
 build/
+keytools/
+
 .vscode/settings.json
 
 venv*/

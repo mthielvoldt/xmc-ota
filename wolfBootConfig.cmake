@@ -21,5 +21,7 @@ set(USER_HAL_INCLUDE_DIRS
   ${PROJECT_SOURCE_DIR}/deps/firment/firmware/lib/CMSIS-6.1.0/Core/Include
 )
 
+set(KEYTOOLS_DIR ${PROJECT_BINARY_DIR}/../keytools)
+
 set(BUILD_TEST_APPS no)
 set(BUILD_IMAGE yes)
