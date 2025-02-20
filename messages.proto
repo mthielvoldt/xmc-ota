@@ -1,0 +1,44 @@
+// A message structure to control a signal generator's output waveform.
+
+syntax = "proto3";
+import "firment_msg.proto";
+
+/* Project-specific messages */
+
+enum OutputChannel {
+  CHANNEL_A = 0;
+  CHANNEL_B = 1;
+}
+
+message ExampleCtl {
+  OutputChannel channel = 6;
+  bool enabled = 5;
+  float amplitudeV = 1;
+}
+
+message ExampleTlm {
+  sint32 currentMa = 1;
+}
+
+
+message Top {
+  oneof sub {
+    Ack Ack = 1;
+    Log Log = 2;
+
+    /* Ghost Probe messages */
+    ProbeSignals ProbeSignals = 3;
+    RunScanCtl RunScanCtl = 4;
+
+    /* FW Update messages */
+    ImageData ImageData = 5;
+    PageStatus PageStatus = 6;
+    Reset Reset = 7;
+
+    // TouchParam TouchParam = 8;
+
+    /* Application messages */
+    ExampleCtl ExampleCtl = 12;
+    ExampleTlm ExampleTlm = 13;
+  }
+}

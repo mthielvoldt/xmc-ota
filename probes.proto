@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+enum SampleFreq {
+  SCAN_DISABLED = 0;
+  FREQ_2_HZ = 2;
+  FREQ_10_HZ = 10;
+}
+
+/** We use an enum to ID the messages.
+This enum will be available in FW.
+All signal messages have the same format  */
+enum TestPointId {
+  DISCONNECTED = 0;
+  CHAN_A = 1;
+  CHAN_B = 2;
+}
