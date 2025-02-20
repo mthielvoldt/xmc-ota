@@ -8,10 +8,14 @@
         "intelliSenseMode": "gcc-arm",
         "includePath": [
           "firmware",
+          "build/firment",
+          "deps/firment/firmware",
+          "deps/firment/firmware/port/XMC4",
           "deps/firment/firmware/port/XMC4/4800_F144",
-          "deps/mtb-xmclib-cat3/XMCLib/inc",
-          "deps/firment/firmware/port/XMC4/XMC4000_DFP/Device/XMC4700_series/Include",
-          "deps/firment/firmware/port/XMC4/XMC4000_DFP/CMSIS/RTOS/RTX/INC",
+          "deps/firment/firmware/port/XMC4/mtb-xmclib-cat3/XMCLib/inc",
+          "deps/firment/firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/COMPONENT_XMC4700/Include",
+          "deps/firment/firmware/port/XMC4/XMC4000_DFP/RTE_Driver",
+          "deps/firment/firmware/port/XMC4/4800_F144",
           "deps/firment/firmware/port/XMC4/XMC4000_DFP/RTE_Driver",
           "deps/firment/firmware/lib/CMSIS-6.1.0/Core/Include",
           "deps/firment/firmware/lib/CMSIS-6.1.0/Driver/Include",
@@ -22,7 +26,9 @@
         "cStandard": "c11",
         "cppStandard": "c++11",
         "defines": [
-            "CONFIG_MQTT_PROTOCOL_5 1", 
+            "CONFIG_MQTT_PROTOCOL_5 1",
+            "TARGET_xmc4700",
+            "TARGET_stm32f4",
             "XMC4700_F144x2048"
         ]
       },
