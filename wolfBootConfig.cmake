@@ -17,7 +17,7 @@ set(USER_HAL_SOURCES
 )
 set(USER_HAL_INCLUDE_DIRS
   ${XMCLIB}/inc
-  ${PROJECT_SOURCE_DIR}/deps/mtb-xmclib-cat3/CMSIS/Infineon/COMPONENT_XMC4700/Include
+  ${XMCLIB}/../CMSIS/Infineon/COMPONENT_XMC4700/Include
   ${PROJECT_SOURCE_DIR}/deps/firment/firmware/lib/CMSIS-6.1.0/Core/Include
 )
 
