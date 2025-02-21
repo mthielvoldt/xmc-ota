@@ -13,11 +13,21 @@ include(wolfBootConfig.cmake)
 
 add_subdirectory(deps/wolfBoot)
 
+message(STATUS "IMAGE_HEADER_SIZE: ${IMAGE_HEADER_SIZE}")
+math(EXPR APP_CODE_ADDRESS_CACHED "${CACHED_PARTITION_BOOT_ADDRESS} + ${IMAGE_HEADER_SIZE}"
+     OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR APP_CODE_ADDRESS_DIRECT "${WOLFBOOT_PARTITION_BOOT_ADDRESS} + ${IMAGE_HEADER_SIZE}"
+     OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR APP_CODE_SIZE "${WOLFBOOT_PARTITION_SIZE} - ${IMAGE_HEADER_SIZE}"
+     OUTPUT_FORMAT HEXADECIMAL)
+set(LINKER_FILE ${PROJECT_BINARY_DIR}/app.ld)
+configure_file(firmware/XMC4700x2048.ld ${LINKER_FILE})
+
 set(FIRMENT_DIR deps/firment)
 
-# TODO: this could move into fmt's CML.
 
 if (1)
+# TODO: this could move into fmt's CML.
 add_subdirectory(${FIRMENT_DIR}/firmware/port/${FMT_PORT} ${FMT_PORT})
 
 add_subdirectory(${FIRMENT_DIR} firment)
