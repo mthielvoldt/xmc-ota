@@ -32,16 +32,31 @@ add_subdirectory(${FIRMENT_DIR}/firmware/port/${FMT_PORT} ${FMT_PORT})
 
 add_subdirectory(${FIRMENT_DIR} firment)
 
-add_executable(app
+add_executable(app.elf
   firmware/main.c
   firmware/project_comms.c
   firmware/gpio_common.c
 )
-target_include_directories(app PRIVATE
+target_include_directories(app.elf PRIVATE
   firmware
 )
-target_link_libraries(app FirmentFW MCUPort)
+target_link_libraries(app.elf FirmentFW MCUPort)
 endif()
 
-# target_link_libraries(combined_image
-#   wolfboot)
+# Build a binary.
+add_custom_target(app.bin ALL DEPENDS app.elf)
+add_custom_command(TARGET app.bin
+  COMMAND ${CMAKE_C_OBJCOPY} ARGS -O binary app.elf app.bin)
+
+# Sign the binary.
+add_custom_target(signing ALL DEPENDS
+  keystore
+  ${PROJECT_BINARY_DIR}/app.bin
+)
+add_custom_command(TARGET signing
+  COMMAND ${SIGN_TOOL} --ed25519 --sha256 
+    ${PROJECT_BINARY_DIR}/app.bin 
+    ${WOLFBOOT_SIGNING_PRIVATE_KEY}
+    1
+  COMMENT "Signing app.bin, creating app_v<x>_signed.bin"  
+)
