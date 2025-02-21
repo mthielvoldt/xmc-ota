@@ -62,11 +62,18 @@ add_custom_command(TARGET signed_app
   COMMENT "Signing app.bin, creating app_v<x>_signed.bin"  
 )
 
-# add_custom_target(combined.bin ALL DEPENDS 
-#   signed_app
-#   wolfboot_xmc4700.bin  # Needs to be harmonized
-#   ${BINASSEMBLE}
-# )
-# add_custom_command(TARGET combined.bin
-#   COMMAND DEPENDS 
-# )
+add_custom_target(factory_bin ALL DEPENDS 
+  signed_app
+  wolfboot_xmc4700_bin
+  binAssemble
+)
+message("binAssemble CMD: ${BINASSEMBLE} factory_v1.bin ${ARCH_FLASH_OFFSET} wolfboot_xmc4700.bin ${BOOT_ADDRESS} app_v1_signed.bin")
+
+add_custom_command(TARGET factory_bin
+  COMMAND ${BINASSEMBLE} 
+    factory_v1.bin 
+    ${ARCH_FLASH_OFFSET}
+    ${PROJECT_BINARY_DIR}/deps/wolfBoot/test-app/wolfboot_xmc4700.bin
+    ${WOLFBOOT_PARTITION_BOOT_ADDRESS}
+    ${PROJECT_BINARY_DIR}/app_v1_signed.bin
+)
