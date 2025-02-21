@@ -6,3 +6,5 @@ keytools/
 .vscode/settings.json
 
 venv*/
+
+node_modules/
