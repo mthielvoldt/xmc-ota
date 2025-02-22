@@ -34,6 +34,14 @@ void comm_handleTelemetry(void)
 
     break;
   }
+  case 100:
+  case 300:
+  case 400:
+  case 600:
+  {
+    XMC_GPIO_ToggleOutput(led.port, led.pin);
+    break;
+  }
   case CALLS_PER_FULL_ROTATION:
     count = 0;
     break;
