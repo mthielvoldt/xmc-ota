@@ -18,3 +18,9 @@
 
 ### Opportunities
 - move the port linking in CML to firment CML.
+
+## Integrating App + wolfBoot
+- get fw_update.h info from generated target.h
+
+## Wolfboot Gotcha Abatement
+- CMake build should check for and delete target.h if it's in wolfBoot/src
