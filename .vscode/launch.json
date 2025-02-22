@@ -17,7 +17,7 @@
       "showDevDebugOutput": "vscode",
     },
     {
-      "name": "wolfBoot",
+      "name": "wolfBoot+",
       "type": "cortex-debug",
       "servertype": "jlink",
       "request": "launch",
@@ -27,6 +27,7 @@
       "device": "XMC4700-2048",
       "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.s",
       "showDevDebugOutput": "vscode",
+      "preLaunchCommands": [ "add-symbol-file build/app.elf" ]
     },
   ]
 }
