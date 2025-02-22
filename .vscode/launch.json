@@ -1,0 +1,32 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "standalone",
+      "type": "cortex-debug",
+      "servertype": "jlink",
+      "request": "launch",
+      "serverpath": "JLinkGDBServerCLExe",
+      "cwd": "${workspaceFolder}",
+      "executable": "build/app_standalone.elf",
+      "device": "XMC4700-2048",
+      "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.svd",
+      "showDevDebugOutput": "vscode",
+    },
+    {
+      "name": "wolfBoot",
+      "type": "cortex-debug",
+      "servertype": "jlink",
+      "request": "launch",
+      "serverpath": "JLinkGDBServerCLExe",
+      "cwd": "${workspaceFolder}",
+      "executable": "build/deps/wolfBoot/test-app/wolfboot_xmc4700",
+      "device": "XMC4700-2048",
+      "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.s",
+      "showDevDebugOutput": "vscode",
+    },
+  ]
+}
