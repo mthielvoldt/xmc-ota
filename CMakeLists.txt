@@ -40,7 +40,24 @@ add_executable(app.elf
 target_include_directories(app.elf PRIVATE
   firmware
 )
+target_link_options(app.elf PRIVATE "-T${LINKER_FILE}")
+
 target_link_libraries(app.elf FirmentFW MCUPort)
+
+### Standalone app for debug. 
+set(STANDALONE_LINKER_FILE 
+  "${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld")
+add_executable(app_standalone.elf
+  firmware/main.c
+  firmware/project_comms.c
+  firmware/gpio_common.c
+)
+target_include_directories(app_standalone.elf PRIVATE
+  firmware
+)
+target_link_options(app_standalone.elf PRIVATE "-T${STANDALONE_LINKER_FILE}")
+target_link_libraries(app_standalone.elf FirmentFW MCUPort)
+
 endif()
 
 # Build firmware artifacts: signed app binary and combined [boot/app] binary.
