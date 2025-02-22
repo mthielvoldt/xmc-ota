@@ -14,14 +14,14 @@ function App() {
       <div className="row-container">
         <div className='widget-column'>
           <h2>Commands</h2>
-          <widgets.WaveformCtl />
+          <widgets.ExampleCtl />
           <widgets.RunScanCtl />
           <Image />
           <Reset />
         </div>
         <div className='widget-column'>
           <h2>Telemetry</h2>
-          <widgets.WaveformTlm />
+          <widgets.ExampleTlm />
           <Log />
         </div>
         <div className='plot-column'>
