@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.22.1)
 # set(CMAKE_TOOLCHAIN_FILE "toolchain-xmc.cmake")
 project(xmc_ota LANGUAGES C ASM)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug")
+endif()
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
 set(XMCLIB ${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/mtb-xmclib-cat3/XMCLib)
 
 # Note: WolfBoot modifies CMAKE_C_COMPILER etc, in a file called 
