@@ -1,7 +1,4 @@
 #include "project_comms.h"
-#include <fmt_log.h>
-#include <fw_update.h>
-#include <fmt_flash.h>
 
 #define CALLS_PER_FULL_ROTATION 1000U
 
@@ -34,10 +31,12 @@ void comm_handleTelemetry(void)
 
     break;
   }
+  case 1:
   case 100:
+  case 200:
   case 300:
   case 400:
-  case 600:
+  case 500:
   {
     XMC_GPIO_ToggleOutput(led.port, led.pin);
     break;

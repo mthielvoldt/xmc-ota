@@ -15,6 +15,7 @@ set(XMCLIB ${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/mtb-xmclib-cat3
 # toolchain file for the whole project. 
 
 include(wolfBootConfig.cmake)
+include(firmentConfig.cmake) # include after wolfBootConfig.cmake
 
 add_subdirectory(deps/wolfBoot)
 

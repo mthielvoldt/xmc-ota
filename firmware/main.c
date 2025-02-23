@@ -9,7 +9,7 @@
 
 #include <fmt_spi.h>
 #include <fmt_rx.h>
-#include <port/XMC4/fmt_periodic_xmc.h> // TODO: decompose this in FMT
+#include <fmt_periodic_port.h> // TODO: decompose this in FMT
 
 void main(void) {
 
