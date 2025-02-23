@@ -77,7 +77,7 @@ add_custom_command(DEPENDS app.elf
 add_custom_target(signed_app ALL DEPENDS app.bin keystore)
 # Sign the binary.
 add_custom_command(TARGET signed_app
-  COMMAND ${SIGN_TOOL} --ed25519 --sha256 
+  COMMAND IMAGE_HEADER_SIZE=${IMAGE_HEADER_SIZE} ${SIGN_TOOL} --ed25519 --sha256 
     ${PROJECT_BINARY_DIR}/app.bin 
     ${WOLFBOOT_SIGNING_PRIVATE_KEY}
     1
