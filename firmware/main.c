@@ -63,5 +63,7 @@ void periodicA()
  */
 void onDownloadComplete(void) {
   wolfBoot_update_trigger();
+  // Insert a delay.  
+  for (uint32_t i = 0; i < 1000000; i++);
   NVIC_SystemReset();
 }
