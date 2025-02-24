@@ -21,7 +21,7 @@ void comm_handleTelemetry(void)
   {
   case 0:
   {
-    if (++rotations > 100) rotations = 0;
+    rotations++;
 
     fmt_sendMsg((const Top){
         .which_sub = Top_ExampleTlm_tag,

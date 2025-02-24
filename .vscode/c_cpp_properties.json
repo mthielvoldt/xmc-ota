@@ -29,6 +29,7 @@
             "CONFIG_MQTT_PROTOCOL_5 1",
             "TARGET_xmc4700",
             "WOLFBOOT_FIXED_PARTITIONS",
+            "WOLFBOOT_SIGN_ED25519",
             "XMC4700_F144x2048"
         ]
       },
