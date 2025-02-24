@@ -35,8 +35,8 @@ void comm_handleTelemetry(void)
   case 100:
   case 200:
   case 300:
-  case 400:
-  case 500:
+  // case 400:
+  // case 500:
   {
     XMC_GPIO_ToggleOutput(led.port, led.pin);
     break;
