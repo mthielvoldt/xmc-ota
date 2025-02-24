@@ -17,6 +17,8 @@ set(WOLFBOOT_PARTITION_SWAP_ADDRESS   0x0C0C0000) # sector 11
 # see Vector Table Offset Register 2-64 (p123)
 set(IMAGE_HEADER_SIZE 1024)
 
+set(EXTRA_COMPILE_OPTIONS "-mfloat-abi=hard")
+
 set(USER_HAL_SOURCES
   ${XMCLIB}/src/xmc4_flash.c
 )
