@@ -16,6 +16,7 @@ set(XMCLIB ${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/mtb-xmclib-cat3
 
 include(wolfBootConfig.cmake)
 include(firmentConfig.cmake) # include after wolfBootConfig.cmake
+include(simpleVersion.cmake)
 
 add_subdirectory(deps/wolfBoot)
 
@@ -81,7 +82,7 @@ add_custom_command(TARGET signed_app
   COMMAND IMAGE_HEADER_SIZE=${IMAGE_HEADER_SIZE} ${SIGN_TOOL} --ed25519 --sha256 
     ${PROJECT_BINARY_DIR}/app.bin 
     ${WOLFBOOT_SIGNING_PRIVATE_KEY}
-    1
+    ${APP_VERSION}
   COMMENT "Signing app.bin, creating app_v<x>_signed.bin"  
 )
 
@@ -90,13 +91,12 @@ add_custom_target(factory_bin ALL DEPENDS
   wolfboot_xmc4700_bin
   binAssemble
 )
-message("binAssemble CMD: ${BINASSEMBLE} factory_v1.bin ${ARCH_FLASH_OFFSET} wolfboot_xmc4700.bin ${BOOT_ADDRESS} app_v1_signed.bin")
 
 add_custom_command(TARGET factory_bin
   COMMAND ${BINASSEMBLE} 
-    factory_v1.bin 
+    factory_v${APP_VERSION}.bin 
     ${ARCH_FLASH_OFFSET}
     ${PROJECT_BINARY_DIR}/deps/wolfBoot/test-app/wolfboot_xmc4700.bin
     ${WOLFBOOT_PARTITION_BOOT_ADDRESS}
-    ${PROJECT_BINARY_DIR}/app_v1_signed.bin
+    ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin
 )
