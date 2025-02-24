@@ -7,9 +7,13 @@
 #include "project_comms.h"
 #include "frequency.h"
 
+#include <wolfboot/wolfboot.h>
 #include <fmt_spi.h>
 #include <fmt_rx.h>
 #include <fmt_periodic_port.h> // TODO: decompose this in FMT
+#include <fmt_update.h>
+
+void onDownloadComplete(void);
 
 void main(void) {
 
@@ -29,6 +33,7 @@ void main(void) {
       .spiIrqPriority = spiTxBuf_priority, // TODO: check if this is used.
   };
   fmt_initSpi(spiConfig);
+  fmt_initUpdate(onDownloadComplete);
 
   comm_init((portPin_t){.port = XMC_GPIO_PORT5, .pin = 9U});
 
@@ -49,4 +54,14 @@ void periodicA()
 {
   comm_handleTelemetry();
   fmt_handleRx();
+}
+
+/** fmt_update Download_finished callback
+ * Executed when an image download completes.
+ * This requests the wolfboot bootloader boot to this image on next boot. 
+ * This request comes via a status footer (trailer) written to flash partition.
+ */
+void onDownloadComplete(void) {
+  wolfBoot_update_trigger();
+  NVIC_SystemReset();
 }

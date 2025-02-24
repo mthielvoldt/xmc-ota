@@ -48,9 +48,9 @@ target_include_directories(app.elf PRIVATE
 )
 target_link_options(app.elf PRIVATE "-T${LINKER_FILE}")
 
-target_link_libraries(app.elf FirmentFW MCUPort)
+target_link_libraries(app.elf FirmentFW MCUPort wolfboot)
 
-### Standalone app for debug. 
+### Standalone app for debug. # TODO: DRY this with an add_library() layer. 
 set(STANDALONE_LINKER_FILE 
   "${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld")
 add_executable(app_standalone.elf
@@ -62,7 +62,7 @@ target_include_directories(app_standalone.elf PRIVATE
   firmware
 )
 target_link_options(app_standalone.elf PRIVATE "-T${STANDALONE_LINKER_FILE}")
-target_link_libraries(app_standalone.elf FirmentFW MCUPort)
+target_link_libraries(app_standalone.elf FirmentFW MCUPort wolfboot)
 
 endif()
 
