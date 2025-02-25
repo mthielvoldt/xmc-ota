@@ -32,11 +32,8 @@ configure_file(firmware/XMC4700x2048.ld ${LINKER_FILE})
 
 set(FIRMENT_DIR deps/firment)
 
-
-if (1)
 # TODO: this could move into fmt's CML.
 add_subdirectory(${FIRMENT_DIR}/firmware/port/${FMT_PORT} ${FMT_PORT})
-
 add_subdirectory(${FIRMENT_DIR} firment)
 
 add_executable(app.elf
@@ -65,7 +62,6 @@ target_include_directories(app_standalone.elf PRIVATE
 target_link_options(app_standalone.elf PRIVATE "-T${STANDALONE_LINKER_FILE}")
 target_link_libraries(app_standalone.elf FirmentFW MCUPort wolfboot)
 
-endif()
 
 # Build firmware artifacts: signed app binary and combined [boot/app] binary.
 add_custom_command(DEPENDS app.elf
@@ -99,4 +95,16 @@ add_custom_command(TARGET factory_bin
     ${PROJECT_BINARY_DIR}/deps/wolfBoot/test-app/wolfboot_xmc4700.bin
     ${WOLFBOOT_PARTITION_BOOT_ADDRESS}
     ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin
+)
+
+# Copy image files to folder outside binary dir so I can use clean-build to make
+# different versions.  Note I only need this until I figure out 
+# - how to bump versions with just the build step, or 
+# - how to re-configure without deleting the whole build dir.
+set(IMAGES_DIR ${PROJECT_BINARY_DIR}/../images)
+add_custom_command(TARGET factory_bin
+  COMMAND mkdir -p ${PROJECT_BINARY_DIR}/../images &&
+    mv ${PROJECT_BINARY_DIR}/factory_v${APP_VERSION}.bin ${IMAGES_DIR}/ &&
+    mv ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin ${IMAGES_DIR}/ &&
+    mv ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}.elf ${IMAGES_DIR}/
 )
