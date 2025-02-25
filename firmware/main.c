@@ -14,18 +14,21 @@
 #include <fmt_update.h>
 
 void onDownloadComplete(void);
+void onDownloadStart(void);
 
-void main(void) {
+
+void main(void)
+{
 
   extern ARM_DRIVER_SPI Driver_SPI4;
 
   spiCfg_t spiConfig = {
       .spiModule = &Driver_SPI4,
       .msgWaitingInput = {RTE_IOC_P1_0_ERU0}, // ERU0.3
-      .msgWaitingOut = 3, // must call msgWaitingISR from ERU0_3_IRQHandler
+      .msgWaitingOut = 3,                     // must call msgWaitingISR from ERU0_3_IRQHandler
       .msgWaitingIRQn = ERU0_3_IRQn,
       .clearToSendInput = {RTE_IOC_P0_4_ERU0}, // ERU0.2
-      .clearToSendOut = 2, // must call clearToSendISR from ERU0_2_IRQHandler
+      .clearToSendOut = 2,                     // must call clearToSendISR from ERU0_2_IRQHandler
       .clearToSendIRQn = ERU0_2_IRQn,
       .baudHz = 1000000,
       .busMode = BUS_MODE_MAIN,
@@ -33,20 +36,21 @@ void main(void) {
       .spiIrqPriority = spiTxBuf_priority, // TODO: check if this is used.
   };
   fmt_initSpi(spiConfig);
-  fmt_initUpdate(onDownloadComplete);
+  fmt_initUpdate(onDownloadStart, onDownloadComplete);
 
   comm_init((portPin_t){.port = XMC_GPIO_PORT5, .pin = 9U});
 
   // Set periodicA to 1kHz frequency.
   initPeriodicISR(
-    CCU40,
-    CCU40_CC40,
-    XMC_CCU4_SLICE_PRESCALER_128,
-    PRESCALE_128_TICKS_IN_1MS,
-    periodicA_IRQn,
-    periodicA_priority);
+      CCU40,
+      CCU40_CC40,
+      XMC_CCU4_SLICE_PRESCALER_128,
+      PRESCALE_128_TICKS_IN_1MS,
+      periodicA_IRQn,
+      periodicA_priority);
 
-  for (;;);
+  for (;;)
+    ;
 }
 
 // 1kHz
@@ -56,14 +60,17 @@ void periodicA()
   fmt_handleRx();
 }
 
+void onDownloadStart(void)
+{
+  wolfBoot_update_trigger();
+}
+
 /** fmt_update Download_finished callback
  * Executed when an image download completes.
- * This requests the wolfboot bootloader boot to this image on next boot. 
+ * This requests the wolfboot bootloader boot to this image on next boot.
  * This request comes via a status footer (trailer) written to flash partition.
  */
-void onDownloadComplete(void) {
-  wolfBoot_update_trigger();
-  // Insert a delay.  
-  for (uint32_t i = 0; i < 1000000; i++);
+void onDownloadComplete(void)
+{
   NVIC_SystemReset();
 }
