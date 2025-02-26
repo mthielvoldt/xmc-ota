@@ -17,6 +17,13 @@ set(WOLFBOOT_PARTITION_SWAP_ADDRESS   0x0C140000) # sector 13
 # see Vector Table Offset Register 2-64 (p123)
 set(IMAGE_HEADER_SIZE 1024)
 
+# XMC4 experiences program disturb with nearby bytes when programming twice to 
+# the same flash page with no erase between. 
+set(WOLFBOOT_STATUS_BYTE_SPACING 128)
+
+# XMC uses erased-state = 0. WolfBoot defaults to erased = 1's (0xFF)
+set(FLAGS_INVERT ON)
+
 set(EXTRA_COMPILE_OPTIONS "-mfloat-abi=hard")
 
 set(USER_HAL_SOURCES
