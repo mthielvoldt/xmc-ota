@@ -3,9 +3,9 @@
 build/
 keytools/
 images/
+node_modules/
+venv*/
 
 .vscode/settings.json
 
-venv*/
-
-node_modules/
+scratch/

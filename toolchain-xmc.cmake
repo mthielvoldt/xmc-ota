@@ -4,7 +4,7 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_C_STANDARD 11)
 
 # Suppresses the check for a working compiler, which will fail for sys calls since there's no sys.
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 
 # An alternate way to suppress the compiler check.
 # This alternate has the side-effect of producing error messages.
@@ -12,7 +12,16 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
 set(CMAKE_C_OBJCOPY arm-none-eabi-objcopy)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfloat-abi=hard -mcpu=cortex-m4 -mthumb -fdata-sections -ffunction-sections")
+set(CMAKE_C_FLAGS "-mfloat-abi=hard -mcpu=cortex-m4 -mthumb -fdata-sections -ffunction-sections -ffreestanding")
+set(CMAKE_C_FLAGS_DEBUG "-Og -g")
+
+set(CMAKE_EXE_LINKER_FLAGS "-Wl,--gc-sections")
+
+# The following linker flags are used in other systems, perhaps for testing. 
+# nosys will totally gripe with warnings though. 
+  # --specs=nano.specs
+  # --specs=nosys.specs
+
 
 # "-Wa," must preceed each option passed to the assembler.
 set(ASSEMBLER_FLAGS "-Wa,-mcpu=cortex-m4")

@@ -36,30 +36,22 @@ set(FIRMENT_DIR deps/firment)
 add_subdirectory(${FIRMENT_DIR}/firmware/port/${FMT_PORT} ${FMT_PORT})
 add_subdirectory(${FIRMENT_DIR} firment)
 
-add_executable(app.elf
+set(APP_SOURCES
   firmware/main.c
   firmware/project_comms.c
   firmware/gpio_common.c
 )
-target_include_directories(app.elf PRIVATE
-  firmware
-)
+add_executable(app.elf ${APP_SOURCES})
+target_include_directories(app.elf PRIVATE firmware)
 target_link_options(app.elf PRIVATE "-T${LINKER_FILE}")
-
 target_link_libraries(app.elf FirmentFW MCUPort wolfboot)
 
 ### Standalone app for debug. # TODO: DRY this with an add_library() layer. 
-set(STANDALONE_LINKER_FILE 
-  "${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld")
-add_executable(app_standalone.elf
-  firmware/main.c
-  firmware/project_comms.c
-  firmware/gpio_common.c
-)
-target_include_directories(app_standalone.elf PRIVATE
-  firmware
-)
-target_link_options(app_standalone.elf PRIVATE "-T${STANDALONE_LINKER_FILE}")
+add_executable(app_standalone.elf ${APP_SOURCES})
+target_include_directories(app_standalone.elf PRIVATE firmware)
+# This is where app_standalone differs from app.
+target_link_options(app_standalone.elf PRIVATE 
+"-T${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld")
 target_link_libraries(app_standalone.elf FirmentFW MCUPort wolfboot)
 
 
@@ -82,9 +74,20 @@ add_custom_command(TARGET signed_app
   COMMENT "Signing app.bin, creating app_v<x>_signed.bin"  
 )
 
+add_executable(bootloader.elf
+  bl/bl_main.c
+  deps/wolfBoot/src/boot_arm.c
+  deps/wolfBoot/src/image.c
+)
+target_link_libraries(bootloader.elf wolfboot public_key FirmentFW)
+target_link_options(bootloader.elf PRIVATE "-T${LINKER_FILE}")
+add_custom_command(TARGET bootloader.elf POST_BUILD
+  COMMAND ${CMAKE_C_OBJCOPY} ARGS -O binary bootloader.elf bootloader.bin
+)
+
 add_custom_target(factory_bin ALL DEPENDS 
   signed_app
-  wolfboot_xmc4700_bin
+  bootloader.elf
   binAssemble
 )
 
@@ -92,7 +95,7 @@ add_custom_command(TARGET factory_bin
   COMMAND ${BINASSEMBLE} 
     factory_v${APP_VERSION}.bin 
     ${ARCH_FLASH_OFFSET}
-    ${PROJECT_BINARY_DIR}/deps/wolfBoot/test-app/wolfboot_xmc4700.bin
+    ${PROJECT_BINARY_DIR}/bootloader.bin
     ${WOLFBOOT_PARTITION_BOOT_ADDRESS}
     ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin
 )
