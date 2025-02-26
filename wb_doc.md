@@ -2,6 +2,11 @@
 ## Wolfboot specifc
 1. Wolfboot assumes plenty of erase sectors in each partition. 
   - What's plenty? 
+2. The swap sector considered to be one SECTOR_SIZE
+3. Wolfboot defaults to erased state == 0xFF (1's).  Use WOLFBOOT_FLAGS_INVERT.
+
+
+
 
 ## Flash-mem related
 2. Flash can demand coddling.  Thin margins; state is fragile.
@@ -17,18 +22,30 @@
 
 
 # What WolfBoot does
+## wolfBoot_start (update_flash.c)
+- check partition states on BOOT, UPDATE. 
+- checks if an update was interrupted by reset, and resumes if so. 
+- 
 
-hal_init(): you defined this
-wolfBoot_start() -> update_flash.c
+## wolfBoot_update
+This can be called either before or AFTER completing wolfBoot_swap. 
 
-### update_flash.c
-call get_partition_state() on BOOT, UPDATE partitions. 
-- Checks for magic # "BOOT" in specified partition. !!! 
-  - !! FAILS in boot partition, Reads 0xFFFFFFFF, not "BOOT"
-  - !! FAILS in update partition, reads 0, not "BOOT". 
+## wolfBoot_swap_and_final_erase "finalize" would be better
+This function is really all about managing the status bytes in update and boot.
+Assuming no interrupt while in the last step (a covered scenario), there are two different cases.
+1. The second-to-last sector (with status byte) contains image data. 
+2. The second-to-last sector contains no image data (image is entirely earlier)
 
-- swap_and_final_erase(resume=1) in case power failed during swap. 
-  - opens all 3 partitions.
+In both cases, the target partition states are the same: 
+partition:  boot    swap    update
+state:      TEST    any     NEW
+TEST so a revert can happen if new image fails.  
+NEW so WB knows not to try another update without a revert scenario. 
+
+### Scenario 1.
+finalize() is called with the following partition states: 
+Partition:  boot     swap     update
+state:      
 
 
 ## Macros Commonly used

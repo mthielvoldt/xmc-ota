@@ -1,3 +1,6 @@
+# Getting FW Update working
+- set_update_sector_flag() calls will likely clobber nearby flags. Space out.
+
 ## Importing Firment 
 
 ### Imports that should be optional
