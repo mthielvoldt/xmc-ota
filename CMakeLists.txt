@@ -106,5 +106,5 @@ add_custom_command(TARGET factory_bin
   COMMAND mkdir -p ${PROJECT_BINARY_DIR}/../images &&
     mv ${PROJECT_BINARY_DIR}/factory_v${APP_VERSION}.bin ${IMAGES_DIR}/ &&
     mv ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin ${IMAGES_DIR}/ &&
-    mv ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}.elf ${IMAGES_DIR}/
+    mv ${PROJECT_BINARY_DIR}/app.elf ${IMAGES_DIR}/app_v${APP_VERSION}.elf
 )
