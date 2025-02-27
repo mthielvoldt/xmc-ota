@@ -17,17 +17,30 @@
       "showDevDebugOutput": "vscode",
     },
     {
-      "name": "wolfBoot+",
+      "name": "myBoot",
       "type": "cortex-debug",
       "servertype": "jlink",
       "request": "launch",
       "serverpath": "JLinkGDBServerCLExe",
       "cwd": "${workspaceFolder}",
-      "executable": "build/deps/wolfBoot/test-app/wolfboot_xmc4700",
+      "executable": "build/bootloader.elf",
       "device": "XMC4700-2048",
       "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.s",
       "showDevDebugOutput": "vscode",
-      "preLaunchCommands": [ "add-symbol-file build/app.elf" ]
+      "preLaunchCommands": [ "add-symbol-file images/app_v2.elf" ]
+    },
+    {
+      "name": "myBoot-attach",
+      "type": "cortex-debug",
+      "servertype": "jlink",
+      "request": "attach",
+      "serverpath": "JLinkGDBServerCLExe",
+      "cwd": "${workspaceFolder}",
+      "executable": "build/bootloader.elf",
+      "device": "XMC4700-2048",
+      "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.s",
+      "showDevDebugOutput": "vscode",
+      "preAttachCommands": [ "add-symbol-file images/app_v2.elf" ]
     },
   ]
 }
