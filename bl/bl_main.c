@@ -5,6 +5,7 @@
 #include <hal.h> // do_boot()
 #include <wolfboot/wolfboot.h>
 #include <wolfboot/version.h>
+#include <target.h>
 
 typedef struct
 {
@@ -15,13 +16,13 @@ typedef struct
   uint8_t unconfirmed;
 } partition_status_t;
 
-#define ACTIVE_PARTITION (uint8_t *)0x0C040000u
-#define DOWNLOAD_PARTITION (uint8_t *)0x0C080000u
-#define BACKUP_PARTITION (uint8_t *)0x0C0C0000u
-#define TEST_RESULT_FLASH_ADDRESS 0x0C01C000u // S7 (logical) last 16kB sector.
+#define ACTIVE_PARTITION   (uint8_t *)WOLFBOOT_PARTITION_BOOT_ADDRESS
+#define DOWNLOAD_PARTITION (uint8_t *)WOLFBOOT_PARTITION_UPDATE_ADDRESS
+#define BACKUP_PARTITION   (uint8_t *)WOLFBOOT_PARTITION_SWAP_ADDRESS
+#define TEST_RESULT_FLASH_ADDRESS     0x0C01C000u // S7 (logical) last 16kB sector.
 
-#define PARTITION_SIZE 0x40000
-#define SECTOR_SIZE 0x40000
+#define PARTITION_SIZE WOLFBOOT_PARTITION_SIZE
+#define SECTOR_SIZE WOLFBOOT_SECTOR_SIZE
 
 #define STATUS_TEST_PASS 0xFFFFFFFFu
 
