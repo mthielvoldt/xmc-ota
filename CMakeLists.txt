@@ -102,7 +102,7 @@ add_custom_target(factory_bin ALL DEPENDS
 
 add_custom_command(TARGET factory_bin
   COMMAND ${BINASSEMBLE} 
-    factory_v${APP_VERSION}.bin 
+    factory.bin 
     ${ARCH_FLASH_OFFSET}
     ${PROJECT_BINARY_DIR}/bootloader.bin
     ${WOLFBOOT_PARTITION_BOOT_ADDRESS}
@@ -116,7 +116,7 @@ add_custom_command(TARGET factory_bin
 set(IMAGES_DIR ${PROJECT_BINARY_DIR}/../images)
 add_custom_command(TARGET factory_bin
   COMMAND mkdir -p ${PROJECT_BINARY_DIR}/../images &&
-    mv ${PROJECT_BINARY_DIR}/factory_v${APP_VERSION}.bin ${IMAGES_DIR}/ &&
-    mv ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin ${IMAGES_DIR}/ &&
-    mv ${PROJECT_BINARY_DIR}/app.elf ${IMAGES_DIR}/app_v${APP_VERSION}.elf
+    cp ${PROJECT_BINARY_DIR}/factory.bin ${IMAGES_DIR}/factory_v${APP_VERSION}.bin &&
+    cp ${PROJECT_BINARY_DIR}/app_v${APP_VERSION}_signed.bin ${IMAGES_DIR}/ &&
+    cp ${PROJECT_BINARY_DIR}/app.elf ${IMAGES_DIR}/app_v${APP_VERSION}.elf
 )
