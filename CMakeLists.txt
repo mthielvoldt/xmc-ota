@@ -27,8 +27,12 @@ math(EXPR APP_CODE_ADDRESS_DIRECT "${WOLFBOOT_PARTITION_BOOT_ADDRESS} + ${IMAGE_
      OUTPUT_FORMAT HEXADECIMAL)
 math(EXPR APP_CODE_SIZE "${WOLFBOOT_PARTITION_SIZE} - ${IMAGE_HEADER_SIZE}"
      OUTPUT_FORMAT HEXADECIMAL)
-set(LINKER_FILE ${PROJECT_BINARY_DIR}/app.ld)
-configure_file(firmware/XMC4700x2048.ld ${LINKER_FILE})
+     
+set(APP_PARTITION_LINKER_FILE ${PROJECT_BINARY_DIR}/app.ld)
+set(ROOT_PARTITION_LINKER_FILE 
+  ${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld
+)
+configure_file(firmware/XMC4700x2048.ld ${APP_PARTITION_LINKER_FILE})
 
 set(FIRMENT_DIR deps/firment)
 
@@ -43,7 +47,7 @@ set(APP_SOURCES
 )
 add_executable(app.elf ${APP_SOURCES})
 target_include_directories(app.elf PRIVATE firmware)
-target_link_options(app.elf PRIVATE "-T${LINKER_FILE}")
+target_link_options(app.elf PRIVATE "-T${APP_PARTITION_LINKER_FILE}")
 target_link_libraries(app.elf FirmentFW MCUPort wolfboot)
 
 ### Standalone app for debug. # TODO: DRY this with an add_library() layer. 
@@ -51,7 +55,7 @@ add_executable(app_standalone.elf ${APP_SOURCES})
 target_include_directories(app_standalone.elf PRIVATE firmware)
 # This is where app_standalone differs from app.
 target_link_options(app_standalone.elf PRIVATE 
-"-T${PROJECT_SOURCE_DIR}/deps/firment/firmware/port/XMC4/XMC4700x2048.ld")
+  "-T${ROOT_PARTITION_LINKER_FILE}")
 target_link_libraries(app_standalone.elf FirmentFW MCUPort wolfboot)
 
 
@@ -80,7 +84,8 @@ add_executable(bootloader.elf
   deps/wolfBoot/src/image.c
 )
 target_link_libraries(bootloader.elf wolfboot public_key FirmentFW)
-target_link_options(bootloader.elf PRIVATE "-T${LINKER_FILE}")
+target_link_options(bootloader.elf PRIVATE 
+  "-T${ROOT_PARTITION_LINKER_FILE}")
 add_custom_command(TARGET bootloader.elf POST_BUILD
   COMMAND ${CMAKE_C_OBJCOPY} ARGS -O binary bootloader.elf bootloader.bin
 )
