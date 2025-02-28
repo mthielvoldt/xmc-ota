@@ -33,19 +33,16 @@ uint32_t version(uint8_t *partition)
 }
 bool hasIntegrity(uint8_t *partition)
 {
-  // wolfBoot_verify_integrity only needs the .hdr (header address).
-  struct wolfBoot_image wbImage = {
-      .hdr = partition};
+  struct wolfBoot_image wbImage = {0};
+  wolfBoot_open_image_address(&wbImage, partition);
   // 0 = verified.  -1 = verification failed.
   int wbReturn = wolfBoot_verify_integrity(&wbImage);
   return (wbReturn == 0);
 }
 bool authentic(uint8_t *partition)
 {
-  // wolfBoot_verify_integrity only needs the .hdr (header address).
-  struct wolfBoot_image wbImage = {
-      .hdr = partition,
-  };
+  struct wolfBoot_image wbImage = {0};
+  wolfBoot_open_image_address(&wbImage, partition);
 
   // verify_integrity sets wbImage.sha_hash and .sha_ok on success;
   int wbIntegrity = wolfBoot_verify_integrity(&wbImage);
