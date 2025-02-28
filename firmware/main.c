@@ -16,13 +16,12 @@
 void onDownloadComplete(void);
 void onDownloadStart(void);
 
-
 void main(void)
 {
-
-  extern ARM_DRIVER_SPI Driver_SPI4;
+  extern ARM_DRIVER_SPI Driver_SPI4; // USIC2_0
 
   spiCfg_t spiConfig = {
+      .spiModuleNo = 4, // must match the number of the spiModule.
       .spiModule = &Driver_SPI4,
       .msgWaitingInput = {RTE_IOC_P1_0_ERU0}, // ERU0.3
       .msgWaitingOut = 3,                     // must call msgWaitingISR from ERU0_3_IRQHandler
