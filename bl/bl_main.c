@@ -96,7 +96,9 @@ void saveTestPass(void)
 
 void runApp(void)
 {
-  do_boot((uint32_t*)ACTIVE_PARTITION);
+  // APP_CODE_ADDRESS_CACHED currently defined in CMakeLists.
+  // TODO: move to configured header for clarity
+  do_boot((uint32_t*)APP_CODE_ADDRESS_CACHED);
 }
 
 void installUpdate(void)

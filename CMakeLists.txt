@@ -83,6 +83,10 @@ add_executable(bootloader.elf
   deps/wolfBoot/src/boot_arm.c
   deps/wolfBoot/src/image.c
 )
+# TODO: Move this into my replacement for target.h
+target_compile_definitions(bootloader.elf PRIVATE
+  APP_CODE_ADDRESS_CACHED=${APP_CODE_ADDRESS_CACHED}
+)
 target_link_libraries(bootloader.elf wolfboot public_key FirmentFW)
 target_link_options(bootloader.elf PRIVATE 
   "-T${ROOT_PARTITION_LINKER_FILE}")
