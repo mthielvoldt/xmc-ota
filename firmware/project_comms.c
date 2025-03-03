@@ -11,6 +11,22 @@ void comm_init(portPin_t ledPin)
   XMC_GPIO_Init(led.port, led.pin, &gpOutPinConfig);
 }
 
+void comm_sendVersion(uint32_t versionRaw)
+{
+  fmt_sendMsg((const Top){
+      .which_sub = Top_Version_tag,
+      .sub = {
+          .Version = {
+              .major = versionRaw >> 24,
+              .minor = (versionRaw >> 16) & 0xFF,
+              .patch = versionRaw & 0xFFFF,
+          }}});
+}
+void handleReset(Reset msg)
+{
+  NVIC_SystemReset();
+}
+
 void comm_handleTelemetry(void)
 {
   static uint32_t count = 0;

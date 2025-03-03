@@ -34,6 +34,7 @@ message Top {
     ImageData ImageData = 5;
     PageStatus PageStatus = 6;
     Reset Reset = 7;
+    Version Version = 8;
 
     // TouchParam TouchParam = 8;
 

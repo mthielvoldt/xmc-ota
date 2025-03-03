@@ -48,6 +48,8 @@ void main(void)
       periodicA_IRQn,
       periodicA_priority);
 
+  comm_sendVersion(wolfBoot_current_firmware_version());
+
   for (;;)
     ;
 }

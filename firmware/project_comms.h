@@ -6,4 +6,9 @@
 
 void comm_init(portPin_t ledPin);
 
+void comm_sendVersion(uint32_t versionRaw);
+
+#define USE_Reset
+void handleReset(Reset msg);
+
 void comm_handleTelemetry(void);
