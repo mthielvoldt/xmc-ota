@@ -33,4 +33,4 @@ endfunction()
 
 
 # Define the version as a CMake variable
-set(APP_VERSION "2")
+set(APP_VERSION "11")
