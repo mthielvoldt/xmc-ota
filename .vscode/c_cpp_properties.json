@@ -31,6 +31,7 @@
             "__WOLFBOOT",
             "WOLFBOOT_FIXED_PARTITIONS",
             "WOLFBOOT_SIGN_ED25519",
+            "WOLFBOOT_HASH_SHA256",
             "XMC4700_F144x2048"
         ]
       },

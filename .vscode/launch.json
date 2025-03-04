@@ -17,17 +17,23 @@
       "showDevDebugOutput": "vscode",
     },
     {
-      "name": "myBoot",
+      "name": "BL+App-noFlash",
       "type": "cortex-debug",
       "servertype": "jlink",
       "request": "launch",
       "serverpath": "JLinkGDBServerCLExe",
       "cwd": "${workspaceFolder}",
-      "executable": "build/bootloader.elf",
+      "loadFiles": [],
+      "symbolFiles": ["build/bootloader.elf", "images/app_v4.elf"],
       "device": "XMC4700-2048",
-      "svdFile": "firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.s",
+      "svdFile": "deps/firment/firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.svd",
       "showDevDebugOutput": "vscode",
-      "preLaunchCommands": [ "add-symbol-file images/app_v2.elf" ]
+      // "preLaunchCommands": [
+      //   "loadbin images/factory_v3.bin, 0x0C000000",
+      //   "reset",
+      //   "add-symbol-file build/bootloader.elf",
+      //   "add-symbol-file images/app_v2.elf"
+      // ]
     },
     {
       "name": "myBoot-attach",
