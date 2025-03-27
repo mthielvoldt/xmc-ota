@@ -1,14 +1,12 @@
-#include "project_comms.h"
+#include "config/project_comms.h"
+#include <fmt_gpio.h>
+#include "config/gpio_pcbDetails.h"
 
 #define CALLS_PER_FULL_ROTATION 100U
 
-// optimization: stop storing the config.
-static portPin_t led;
-
-void comm_init(portPin_t ledPin)
+void comm_init(void)
 {
-  led = ledPin;
-  XMC_GPIO_Init(led.port, led.pin, &gpOutPinConfig);
+  fmt_initGpioOutPin(LED_0_PIN_ID, OUTPUT_MODE_PUSH_PULL);
 }
 
 void comm_sendVersion(uint32_t versionRaw)
@@ -50,7 +48,7 @@ void comm_handleTelemetry(void)
   case 1:
   case 5:
   {
-    XMC_GPIO_ToggleOutput(led.port, led.pin);
+    fmt_setPin(LED_0_PIN_ID, OUTPUT_TOGGLE);
     break;
   }
   case CALLS_PER_FULL_ROTATION:

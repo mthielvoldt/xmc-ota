@@ -24,7 +24,7 @@
       "serverpath": "JLinkGDBServerCLExe",
       "cwd": "${workspaceFolder}",
       "loadFiles": [],
-      "symbolFiles": ["build/bootloader.elf", "images/app_v4.elf"],
+      "symbolFiles": ["build/bootloader.elf", "images/app_v12.elf"],
       "device": "XMC4700-2048",
       "svdFile": "deps/firment/firmware/port/XMC4/mtb-xmclib-cat3/CMSIS/Infineon/SVD/XMC4700.svd",
       "showDevDebugOutput": "vscode",

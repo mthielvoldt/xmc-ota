@@ -43,7 +43,7 @@ add_subdirectory(${FIRMENT_DIR} firment)
 set(APP_SOURCES
   firmware/main.c
   firmware/project_comms.c
-  firmware/gpio_common.c
+  firmware/spi_init.c
 )
 add_executable(app.elf ${APP_SOURCES})
 target_include_directories(app.elf PRIVATE firmware)

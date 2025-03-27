@@ -3,12 +3,13 @@
 #include "XMC4700.h"
 #endif
 
-#include "ISR_Config.h"
-#include "project_comms.h"
+#include "config/ISR_Config.h"
+#include "config/project_comms.h"
 #include "frequency.h"
 
 #include <wolfboot/wolfboot.h>
-#include <fmt_spi.h>
+// #include <fmt_spi.h>
+#include "spi_init.h"
 #include <fmt_rx.h>
 #include <fmt_periodic_port.h> // TODO: decompose this in FMT
 #include <fmt_update.h>
@@ -18,26 +19,12 @@ void onDownloadStart(void);
 
 void main(void)
 {
-  extern ARM_DRIVER_SPI Driver_SPI4; // USIC2_0
+  spi_init();
 
-  spiCfg_t spiConfig = {
-      .spiModuleNo = 4, // must match the number of the spiModule.
-      .spiModule = &Driver_SPI4,
-      .msgWaitingInput = {RTE_IOC_P1_0_ERU0}, // ERU0.3
-      .msgWaitingOut = 3,                     // must call msgWaitingISR from ERU0_3_IRQHandler
-      .msgWaitingIRQn = ERU0_3_IRQn,
-      .clearToSendInput = {RTE_IOC_P0_4_ERU0}, // ERU0.2
-      .clearToSendOut = 2,                     // must call clearToSendISR from ERU0_2_IRQHandler
-      .clearToSendIRQn = ERU0_2_IRQn,
-      .baudHz = 1000000,
-      .busMode = BUS_MODE_MAIN,
-      .ssActiveLow = true,
-      .spiIrqPriority = spiTxBuf_priority, // TODO: check if this is used.
-  };
-  fmt_initSpi(spiConfig);
-  fmt_initUpdate(onDownloadStart, onDownloadComplete);
+  fmt_setFirstPageReceivedCallback(onDownloadStart);
+  fmt_setDownloadFinishCallback(onDownloadComplete);
 
-  comm_init((portPin_t){.port = XMC_GPIO_PORT5, .pin = 9U});
+  comm_init();
 
   // Set periodicA to 1kHz frequency.
   initPeriodicISR(
