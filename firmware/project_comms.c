@@ -1,8 +1,9 @@
 #include "config/project_comms.h"
 #include <fmt_gpio.h>
 #include "config/gpio_pcbDetails.h"
+#include <wolfboot/wolfboot.h>
 
-#define CALLS_PER_FULL_ROTATION 100U
+#define CALLS_PER_FULL_ROTATION 500U
 
 void comm_init(void)
 {
@@ -46,6 +47,9 @@ void comm_handleTelemetry(void)
     break;
   }
   case 1:
+  {
+    comm_sendVersion(wolfBoot_current_firmware_version());
+  }
   case 5:
   {
     fmt_setPin(LED_0_PIN_ID, OUTPUT_TOGGLE);
